@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang='zh-cn'>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="renderer" content="webkit">
+  <title>组织视图::组织动态 - 禅道</title>
+<script language='Javascript'>var config={"webRoot":"\/pro\/","appName":"","cookieLife":30,"requestType":"PATH_INFO","requestFix":"-","moduleVar":"m","methodVar":"f","viewVar":"t","defaultView":"html","themeRoot":"\/pro\/theme\/","currentModule":"company","currentMethod":"dynamic","clientLang":"zh-cn","requiredFields":"","router":"\/pro\/index.php","save":"\u4fdd\u5b58","runMode":"","timeout":30000,"pingInterval":""};
+var lang={"submitting":"\u7a0d\u5019...","save":"\u4fdd\u5b58","timeout":"\u8fde\u63a5\u8d85\u65f6\uff0c\u8bf7\u68c0\u67e5\u7f51\u7edc\u73af\u5883\uff0c\u6216\u91cd\u8bd5\uff01"};
+
+</script>
+<script src='/pro/js/jquery/lib.js?v=pro6.7.3' type='text/javascript'></script>
+<script src='/pro/js/zui/min.js?v=pro6.7.3' type='text/javascript'></script>
+<script src='/pro/js/my.full.js?v=pro6.7.3' type='text/javascript'></script>
+<link rel='stylesheet' href='/pro/theme/zui/css/min.css?v=pro6.7.3' type='text/css' media='screen' />
+<link rel='stylesheet' href='/pro/theme/default/style.css?v=pro6.7.3' type='text/css' media='screen' />
+<link rel='stylesheet' href='/pro/theme/lang/zh-cn.css?v=pro6.7.3' type='text/css' media='screen' />
+<style>#featurebar ul.nav > li .chosen-container{height:20px;}
+#featurebar ul.nav > li .chosen-container a.chosen-single{background:#F8FAFE; border:none; -webkit-box-shadow:none;box-shadow:none; font-size:14px;padding-top:0px;}
+#featurebar ul.nav > li .chosen-container a.chosen-single div{top:-8px;}
+#featurebar ul.nav > li.active .chosen-container a.chosen-single{font-weight:bold}
+#featurebar ul.nav > li .chosen-container .chosen-drop {min-width: 300px;!important}
+#featurebar .nav > li > .chosen-container-single{top:-1px!important}
+#featurebar .nav > li > .chosen-container-single .chosen-single div{padding: 6px 22px!important}
+</style><link rel='icon' href='/pro/favicon.ico' type='image/x-icon' />
+<link rel='shortcut icon' href='/pro/favicon.ico' type='image/x-icon' />
+<!--[if lt IE 9]>
+<script src='/pro/js/html5shiv/min.js?v=pro6.7.3' type='text/javascript'></script>
+<script src='/pro/js/respond/min.js?v=pro6.7.3' type='text/javascript'></script>
+<![endif]-->
+<!--[if lt IE 10]>
+<script src='/pro/js/jquery/placeholder/min.js?v=pro6.7.3' type='text/javascript'></script>
+<![endif]-->
+</head>
+<body>
+<link rel='stylesheet' href='/pro/js/jquery/chosen/min.css?v=pro6.7.3' type='text/css' media='screen' />
+<script src='/pro/js/jquery/chosen/min.js?v=pro6.7.3' type='text/javascript'></script>
+<script>
+var noResultsMatch       = '没有匹配结果';
+var chooseUsersToMail    = '选择要发信通知的用户...';
+var defaultChosenOptions = {no_results_text: noResultsMatch, width:'100%', allow_single_deselect: true, disable_search_threshold: 1, placeholder_text_single: ' ', placeholder_text_multiple: ' ', search_contains: true};
+$(document).ready(function()
+{
+    $("#mailto").attr('data-placeholder', chooseUsersToMail);
+    $("#mailto, .chosen, #productID").chosen(defaultChosenOptions).on('chosen:showing_dropdown', function()
+    {
+        var $this = $(this);
+        var $chosen = $this.next('.chosen-container').removeClass('chosen-up');
+        var $drop = $chosen.find('.chosen-drop');
+        $chosen.toggleClass('chosen-up', $drop.height() + $drop.offset().top - $(document).scrollTop() > $(window).height());
+    });
+});
+</script>
+<header id='header'>
+  <div id='topbar'>
+    <div class='pull-right' id='topnav'><div class='dropdown' id='userMenu'><a href='javascript:;' data-toggle='dropdown'><i class='icon-user'></i> yukiyao <span class='caret'></span></a><ul class='dropdown-menu'><li><a href='/pro/my-profile.html?onlybody=yes' class='iframe' data-width='600'>个人档案</a>
+</li><li><a href='/pro/my-changepassword.html?onlybody=yes' class='iframe' data-width='500'>更改密码</a>
+</li><li class='divider'></li><li class='dropdown-submenu left'><a href='javascript:;'>主题</a><ul class='dropdown-menu'><li class='theme-option active'><a href='javascript:selectTheme("default");' data-value='default'>默认</a></li><li class='theme-option'><a href='javascript:selectTheme("green");' data-value='green'>绿色</a></li><li class='theme-option'><a href='javascript:selectTheme("red");' data-value='red'>红色</a></li><li class='theme-option'><a href='javascript:selectTheme("lightblue");' data-value='lightblue'>亮蓝</a></li><li class='theme-option'><a href='javascript:selectTheme("blackberry");' data-value='blackberry'>黑莓</a></li></ul></li><li class='dropdown-submenu left'><a href='javascript:;'>Language</a><ul class='dropdown-menu'><li class='lang-option active'><a href='javascript:selectLang("zh-cn");' data-value='zh-cn'>简体</a></li><li class='lang-option'><a href='javascript:selectLang("zh-tw");' data-value='zh-tw'>繁體</a></li><li class='lang-option'><a href='javascript:selectLang("en");' data-value='en'>English</a></li></ul></li></ul></div><a href='/pro/user-logout.html' >退出</a>
+<div class='dropdown'><a href='javascript:;' data-toggle='dropdown'>帮助 <span class='caret'></span></a><ul class='dropdown-menu pull-right'><li><a href='javascript:;' class='open-help-tab'>手册</a>
+</li><li><a href='/pro/tutorial-start.html' class='iframe' data-width='800' data-headerless='true' data-backdrop='true' data-keyboard='true'>新手教程</a>
+</li><li><a href='/pro/misc-changeLog.html' class='iframe' data-width='800' data-headerless='true' data-backdrop='true' data-keyboard='true'>修改日志</a>
+</li></ul></div><a href='/pro/misc-about.html' class='about iframe' data-width='900' data-headerless='true' data-backdrop='true' data-keyboard='true' data-class='modal-about'>关于</a>
+</div>
+    <h5 id='companyname'>
+      集思软件开发（深圳）有限公司项目管理系统    </h5>
+  </div>
+  <nav id='mainmenu'>
+    <ul class='nav'>
+<li  data-id='my'><a href='/pro/my/' ><i class="icon-home"></i><span> 我的地盘</span></a></li>
+<li  data-id='product'><a href='/pro/product/' >产品</a></li>
+<li  data-id='project'><a href='/pro/project/' >项目</a></li>
+<li  data-id='qa'><a href='/pro/qa/' >测试</a></li>
+<li  data-id='repo'><a href='/pro/repo-browse.html' >代码</a></li>
+<li  data-id='doc'><a href='/pro/doc/' >文档</a></li>
+<li  data-id='report'><a href='/pro/report/' >统计</a></li>
+<li class='active' data-id='company'><a href='/pro/company/' class='active'>组织</a></li>
+<li  data-id='admin'><a href='/pro/admin/' >后台</a></li>
+<li class='custom-item'><a href='/pro/custom-ajaxMenu-company-dynamic.html?onlybody=yes' data-toggle='modal' data-type='iframe' title='自定义导航' data-icon='cog' data-width='80%'><i class='icon icon-cog'></i></a></li></ul>
+<div class='input-group input-group-sm' id='searchbox'><div class='input-group-btn' id='typeSelector'><button type='button' class='btn dropdown-toggle' data-toggle='dropdown'><span id='searchTypeName'>Bug</span> <span class='caret'></span></button><input type='hidden' name='searchType' id='searchType' value='bug'  />
+<ul class='dropdown-menu'><li><a href='javascript:;' data-value='bug'>Bug</a></li><li><a href='javascript:;' data-value='story'>需求</a></li><li><a href='javascript:;' data-value='task'>任务</a></li><li><a href='javascript:;' data-value='testcase'>用例</a></li><li><a href='javascript:;' data-value='project'>项目</a></li><li><a href='javascript:;' data-value='product'>产品</a></li><li><a href='javascript:;' data-value='user'>用户</a></li><li><a href='javascript:;' data-value='build'>版本</a></li><li><a href='javascript:;' data-value='release'>发布</a></li><li><a href='javascript:;' data-value='productplan'>产品计划</a></li><li><a href='javascript:;' data-value='testtask'>测试单</a></li><li><a href='javascript:;' data-value='doc'>文档</a></li><li><a href='javascript:;' data-value='testsuite'>套件</a></li><li><a href='javascript:;' data-value='testreport'>测试报告</a></li><li><a href='javascript:;' data-value='all'>全部</a></li><li><a href='javascript:;' data-value='todo'>待办</a></li><li><a href='javascript:;' data-value='effort'>日志</a></li></ul></div><input type='text' name='searchQuery' id='searchQuery' value='' onclick='this.value=""' onkeydown='if(event.keyCode==13) shortcut()' class='form-control' placeholder='' />
+<div id='objectSwitcher' class='input-group-btn'><a href='javascript:shortcut();' class='btn'>GO! </a></div></div>
+      </nav>
+  <nav id="modulemenu">
+    <ul class='nav'>
+<li data-id='name'>集思软件开发（深圳）有限公司&nbsp;<i class="icon-angle-right"></i>&nbsp;</li>
+<li class=' ' data-id='browseUser'><a href='/pro/company-browse.html' >用户</a>
+</li>
+<li class=' ' data-id='dept'><a href='/pro/dept-browse.html' >部门</a>
+</li>
+<li class=' ' data-id='todo'><a href='/pro/company-todo.html' >待办</a>
+</li>
+<li class=' ' data-id='effort'><a href='/pro/company-calendar.html' >日志</a>
+</li>
+<li class=' ' data-id='browseGroup'><a href='/pro/group-browse.html' >权限</a>
+</li>
+<li class=' ' data-id='view'><a href='/pro/company-view.html' >公司</a>
+</li>
+<li class=' active' data-id='dynamic'><a href='/pro/company-dynamic.html' >动态</a>
+</li>
+<li class='right ' data-id='addGroup'><a href='/pro/group-create.html' ><i class="icon-group"></i>&nbsp;添加分组</a>
+</li>
+<li class='right ' data-id='batchAddUser'><a href='/pro/user-batchCreate-0.html' ><i class="icon-plus-sign"></i>&nbsp;批量添加</a>
+</li>
+<li class='right ' data-id='addUser'><a href='/pro/user-create-0.html' ><i class="icon-plus"></i>&nbsp;添加用户</a>
+</li>
+</ul>
+  </nav>
+</header>
+
+<div id='wrap'  >
+  <div class='outer'>
+<script language='Javascript'>
+var browseType = 'thisweek';
+</script>
+<div id='featurebar'>
+  <ul class='nav'>
+    <li id="today"><a href='/pro/company-dynamic-today.html' >今天</a>
+</li><li id="yesterday"><a href='/pro/company-dynamic-yesterday.html' >昨天</a>
+</li><li id="twodaysago"><a href='/pro/company-dynamic-twodaysago.html' >前天</a>
+</li><li id="thisweek"><a href='/pro/company-dynamic-thisweek.html' >本周</a>
+</li><li id="lastweek"><a href='/pro/company-dynamic-lastweek.html' >上周</a>
+</li><li id="thismonth"><a href='/pro/company-dynamic-thismonth.html' >本月</a>
+</li><li id="lastmonth"><a href='/pro/company-dynamic-lastmonth.html' >上月</a>
+</li><li id="all"><a href='/pro/company-dynamic-all.html' >所有</a>
+</li><li id='account'><select name='account' id='account' onchange=changeUser(this.value) class="form-control chosen">
+<option value='' title='用户' data-keys='yonghu yh'>用户</option>
+<option value='admin' title='A:admin' data-keys='a:admin aa'>A:admin</option>
+<option value='anillycheng' title='A:anillycheng' data-keys='a:anillycheng aa'>A:anillycheng</option>
+<option value='annechu' title='A:annechu' data-keys='a:annechu aa'>A:annechu</option>
+<option value='avaxuwa' title='A:avaxuwa' data-keys='a:avaxuwa aa'>A:avaxuwa</option>
+<option value='chrisyang' title='C:chrisyang' data-keys='c:chrisyang cc'>C:chrisyang</option>
+<option value='clarecao' title='C:clarecao' data-keys='c:clarecao cc'>C:clarecao</option>
+<option value='dendipeng' title='D:dendipeng' data-keys='d:dendipeng dd'>D:dendipeng</option>
+<option value='eileenyu' title='E:eileenyu' data-keys='e:eileenyu ee'>E:eileenyu</option>
+<option value='emerylin' title='E:emerylin' data-keys='e:emerylin ee'>E:emerylin</option>
+<option value='frankbiee' title='F:frankbiee' data-keys='f:frankbiee ff'>F:frankbiee</option>
+<option value='ianguo' title='I:ianguo' data-keys='i:ianguo ii'>I:ianguo</option>
+<option value='johntan' title='J:johntan' data-keys='j:johntan jj'>J:johntan</option>
+<option value='klhui' title='K:Bryan' data-keys='k:bryan kb'>K:Bryan</option>
+<option value='leilazhao' title='L:leilazhao' data-keys='l:leilazhao ll'>L:leilazhao</option>
+<option value='leo' title='L:leo' data-keys='l:leo ll'>L:leo</option>
+<option value='lukesu' title='L:lukesu' data-keys='l:lukesu ll'>L:lukesu</option>
+<option value='lynnlu' title='L:lynnlu' data-keys='l:lynnlu ll'>L:lynnlu</option>
+<option value='maxqiu' title='M:maxqiu' data-keys='m:maxqiu mm'>M:maxqiu</option>
+<option value='michellezhou' title='M:michellezhou' data-keys='m:michellezhou mm'>M:michellezhou</option>
+<option value='owllai' title='O:owllai' data-keys='o:owllai oo'>O:owllai</option>
+<option value='pennyzhang' title='P:pennyzhang' data-keys='p:pennyzhang pp'>P:pennyzhang</option>
+<option value='peterwong' title='P:peterwong' data-keys='p:peterwong pp'>P:peterwong</option>
+<option value='quintinguo' title='Q:quintinguo' data-keys='q:quintinguo qq'>Q:quintinguo</option>
+<option value='rickwang' title='R:rickwang' data-keys='r:rickwang rr'>R:rickwang</option>
+<option value='sannyqin' title='S:sannyqin' data-keys='s:sannyqin ss'>S:sannyqin</option>
+<option value='sasazeng' title='S:sasazeng' data-keys='s:sasazeng ss'>S:sasazeng</option>
+<option value='sealiu' title='S:sealiu' data-keys='s:sealiu ss'>S:sealiu</option>
+<option value='snowdeng' title='S:snowdeng' data-keys='s:snowdeng ss'>S:snowdeng</option>
+<option value='sunfang' title='S:sunfang' data-keys='s:sunfang ss'>S:sunfang</option>
+<option value='sylphyan' title='S:sylphyan' data-keys='s:sylphyan ss'>S:sylphyan</option>
+<option value='tashapeng' title='T:tashapeng' data-keys='t:tashapeng tt'>T:tashapeng</option>
+<option value='vivianjiang' title='V:vivianjiang' data-keys='v:vivianjiang vv'>V:vivianjiang</option>
+<option value='woodswu' title='W:woodswu' data-keys='w:woodswu ww'>W:woodswu</option>
+<option value='yukiyao' title='Y:yukiyao' data-keys='y:yukiyao yy'>Y:yukiyao</option>
+<option value='zerozhang' title='Z:zerozhang' data-keys='z:zerozhang zz'>Z:zerozhang</option>
+<option value='zitawu' title='Z:zitawu' data-keys='z:zitawu zz'>Z:zitawu</option>
+</select>
+</li><li id='product'><select name='product' id='product' onchange=changeProduct(this.value) class="form-control chosen">
+<option value='0' title='产品' data-keys='chanpin cp'>产品</option>
+<option value='18' title='ELSA-Prepayment-LMD' data-keys='elsa-prepayment-lmd e'>ELSA-Prepayment-LMD</option>
+<option value='17' title='Super Support Platform' data-keys='super support platform ssp'>Super Support Platform</option>
+<option value='16' title='e+ Solutions' data-keys='e solutions es'>e+ Solutions</option>
+<option value='15' title='ELSA-EDI Refactory' data-keys='elsa-edi refactory er'>ELSA-EDI Refactory</option>
+<option value='14' title='U-Shopper' data-keys='u-shopper u'>U-Shopper</option>
+<option value='13' title='AFSA' data-keys='afsa a'>AFSA</option>
+<option value='12' title='ELSA-Order Center' data-keys='elsa-order center ec'>ELSA-Order Center</option>
+<option value='11' title='ELSA-Background Data' data-keys='elsa-background data ed'>ELSA-Background Data</option>
+<option value='10' title='ELSA-User Admin' data-keys='elsa-user admin ea'>ELSA-User Admin</option>
+<option value='9' title='Tracking website 2.0' data-keys='tracking website 2.0 tw2'>Tracking website 2.0</option>
+<option value='8' title='UFL Declaration Platform' data-keys='ufl declaration platform udp'>UFL Declaration Platform</option>
+<option value='7' title='ELSA' data-keys='elsa e'>ELSA</option>
+<option value='6' title='WOS4' data-keys='wos4 w'>WOS4</option>
+<option value='5' title='AFSA2' data-keys='afsa2 a'>AFSA2</option>
+</select>
+</li><li id='project' style='margin-right: 10px;'><select name='project' id='project' onchange=changeProject(this.value) class="form-control chosen">
+<option value='0' title='项目' data-keys='xiangmu xm'>项目</option>
+<option value='24' title='WOS4_milestone_1.1.2' data-keys='wos4_milestone_1.1.2 w12'>WOS4_milestone_1.1.2</option>
+<option value='16' title='WOS4_milestone_1.1.0' data-keys='wos4_milestone_1.1.0 w1'>WOS4_milestone_1.1.0</option>
+<option value='13' title='Tracking_website_2.0-1.0.0' data-keys='tracking_website_2.0-1.0.0 t00'>Tracking_website_2.0-1.0.0</option>
+<option value='41' title='milestoneV4.2.20' data-keys='milestonev4.2.20 m22'>milestoneV4.2.20</option>
+<option value='40' title='WOS4_billing_1.0.0' data-keys='wos4_billing_1.0.0 w0'>WOS4_billing_1.0.0</option>
+<option value='38' title='AFSA_EDI_API_intraction-1.0.0' data-keys='afsa_edi_api_intraction-1.0.0 a0'>AFSA_EDI_API_intraction-1.0.0</option>
+<option value='37' title='Tracking_Website_2.0_1.0.1' data-keys='tracking_website_2.0_1.0.1 t001'>Tracking_Website_2.0_1.0.1</option>
+<option value='36' title='WOS4_milestone_1.1.5' data-keys='wos4_milestone_1.1.5 w15'>WOS4_milestone_1.1.5</option>
+<option value='35' title='ePlus_V1.1.0' data-keys='eplus_v1.1.0 e1'>ePlus_V1.1.0</option>
+<option value='34' title='AFSA3-BG-courier-company-decode-v1.0.0' data-keys='afsa3-bg-courier-company-decode-v1.0.0 a0'>AFSA3-BG-courier-company-decode-v1.0.0</option>
+<option value='33' title='WOS4_milestone_1.1.4' data-keys='wos4_milestone_1.1.4 w14'>WOS4_milestone_1.1.4</option>
+<option value='32' title='milestonev4.2.19' data-keys='milestonev4.2.19 m21'>milestonev4.2.19</option>
+<option value='31' title='E+ Solution-1.0.0' data-keys='e solution-1.0.0 es0'>E+ Solution-1.0.0</option>
+<option value='30' title='SuperSupportPlatform_version_1.0.0' data-keys='supersupportplatform_version_1.0.0 s0'>SuperSupportPlatform_version_1.0.0</option>
+<option value='29' title='ELSA-Prepayment-LMD-1.0.0' data-keys='elsa-prepayment-lmd-1.0.0 e0'>ELSA-Prepayment-LMD-1.0.0</option>
+<option value='28' title='technical debt' data-keys='technical debt td'>technical debt</option>
+<option value='27' title='WOS4_milestone_1.1.3' data-keys='wos4_milestone_1.1.3 w13'>WOS4_milestone_1.1.3</option>
+<option value='26' title='AFSA_EXP_EDI_Refactory_v1.0.0' data-keys='afsa_exp_edi_refactory_v1.0.0 a0'>AFSA_EXP_EDI_Refactory_v1.0.0</option>
+<option value='25' title='milestoneV4.2.18' data-keys='milestonev4.2.18 m21'>milestoneV4.2.18</option>
+<option value='23' title='U-Shopper' data-keys='u-shopper u'>U-Shopper</option>
+<option value='22' title='AFSA' data-keys='afsa a'>AFSA</option>
+<option value='20' title='WOS4_milestone_1.1.1.1' data-keys='wos4_milestone_1.1.1.1 w111'>WOS4_milestone_1.1.1.1</option>
+<option value='19' title='add OCI on FWB/FHL for china customs import' data-keys='add oci on fwb/fhl for china customs import aoofffcci'>add OCI on FWB/FHL for china customs import</option>
+<option value='14' title='AFSA3 user admin' data-keys='afsa3 user admin aua'>AFSA3 user admin</option>
+<option value='5' title='UDP milestone1.0.0' data-keys='udp milestone1.0.0 um0'>UDP milestone1.0.0</option>
+<option value='4' title='AFSA3' data-keys='afsa3 a'>AFSA3</option>
+<option value='21' title='WOS4_milestone_1.1.1' data-keys='wos4_milestone_1.1.1 w11'>WOS4_milestone_1.1.1</option>
+<option value='18' title='milestone4.2.17' data-keys='milestone4.2.17 m21'>milestone4.2.17</option>
+<option value='17' title='milestone4.2.16' data-keys='milestone4.2.16 m21'>milestone4.2.16</option>
+<option value='15' title='milestone4.2.15' data-keys='milestone4.2.15 m21'>milestone4.2.15</option>
+<option value='12' title='WOS4_milestone_1.0.9' data-keys='wos4_milestone_1.0.9 w09'>WOS4_milestone_1.0.9</option>
+<option value='8' title='WOS4_milestone_1.0.8' data-keys='wos4_milestone_1.0.8 w08'>WOS4_milestone_1.0.8</option>
+<option value='7' title='milestone4.2.14' data-keys='milestone4.2.14 m21'>milestone4.2.14</option>
+<option value='6' title='WOS4_milestone_1.0.7' data-keys='wos4_milestone_1.0.7 w07'>WOS4_milestone_1.0.7</option>
+<option value='3' title='milestone4.2.13' data-keys='milestone4.2.13 m21'>milestone4.2.13</option>
+<option value='2' title='AIO project' data-keys='aio project ap'>AIO project</option>
+<option value='11' title='milestone4.2.10' data-keys='milestone4.2.10 m21'>milestone4.2.10</option>
+<option value='10' title='milestone4.2.11' data-keys='milestone4.2.11 m21'>milestone4.2.11</option>
+<option value='9' title='milestone4.2.12' data-keys='milestone4.2.12 m21'>milestone4.2.12</option>
+</select>
+</li><li id='bysearchTab'><a href='#' ><i class="icon-search icon"></i>&nbsp;搜索</a>
+</li>  </ul>
+  <div id='querybox' class=''></div>
+</div>
+  
+<table class='table table-condensed table-hover table-striped tablesorter table-fixed'>
+  <thead>
+    <tr class='colhead'>
+            <th class='w-150px'><div class='headerSortUp'><a href='/pro/company-dynamic-thisweek--date_asc-1086-20.html' >日期</a>
+</div></th>
+      <th class='w-user'> <div class='header'><a href='/pro/company-dynamic-thisweek--actor_asc-1086-20.html' >操作者</a>
+</div></th>
+      <th class='w-100px'><div class='header'><a href='/pro/company-dynamic-thisweek--action_asc-1086-20.html' >动作</a>
+</div></th>
+      <th class='w-80px'> <div class='header'><a href='/pro/company-dynamic-thisweek--objectType_asc-1086-20.html' >对象类型</a>
+</div></th>
+      <th class='w-id'>   <div class='header'><a href='/pro/company-dynamic-thisweek--objectID_asc-1086-20.html' >ID</a>
+</div></th>
+      <th>对象名称</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr class='text-center'>
+    <td>11月18日 12:15</td>
+    <td>
+      yukiyao    </td>
+    <td>登录系统</td>
+    <td>用户</td>
+    <td>18</td>
+    <td class='text-left'><a href='/pro/user-view-yukiyao.html' >yukiyao</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月18日 12:15</td>
+    <td>
+      yukiyao    </td>
+    <td>退出登录</td>
+    <td>用户</td>
+    <td>18</td>
+    <td class='text-left'><a href='/pro/user-view-yukiyao.html' >yukiyao</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月18日 12:13</td>
+    <td>
+      yukiyao    </td>
+    <td>登录系统</td>
+    <td>用户</td>
+    <td>18</td>
+    <td class='text-left'><a href='/pro/user-view-yukiyao.html' >yukiyao</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月18日 12:03</td>
+    <td>
+      yukiyao    </td>
+    <td>登录系统</td>
+    <td>用户</td>
+    <td>18</td>
+    <td class='text-left'><a href='/pro/user-view-yukiyao.html' >yukiyao</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月18日 11:27</td>
+    <td>
+      yukiyao    </td>
+    <td>登录系统</td>
+    <td>用户</td>
+    <td>18</td>
+    <td class='text-left'><a href='/pro/user-view-yukiyao.html' >yukiyao</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 21:39</td>
+    <td>
+      rickwang    </td>
+    <td>评论了</td>
+    <td>任务</td>
+    <td>390</td>
+    <td class='text-left'><a href='/pro/task-view-390.html' >FS for FMA/FNA/FSU setup for KTNET</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 21:36</td>
+    <td>
+      rickwang    </td>
+    <td>创建</td>
+    <td>日志</td>
+    <td>2289</td>
+    <td class='text-left'><a href='/pro/effort-view-2289.html' >(1) follow the bryan&#039;s method to run script (ET_in_KTNET_com) and the DB operation is ok
+(2) find some question about the ack of KTNET, refer the following:
+1. I upload FHL and FWB message to KTNET by manual local upload, and then I login the website of KTNET that can find FHL and FWB message, you can refer the website_result.png.
+I use the commend (&quot;/icil/server_common_lib/script/ncftp_common FTP -G -D FHL -P KTNET -s testedi.ktnet.co.kr -u FFUSEX0001 -p FFUSEX0001 -i /var/spool/uucppublic/KTNET/in/ -r -U -M 5 -A FL31&quot;) or this (&quot;/icil/server_common_lib/script/ncftp_common FTP -G -D FWB -P KTNET -s testedi.ktnet.co.kr -u FFUSEX0001 -p FFUSEX0001 -i /var/spool/uucppublic/KTNET/in/ -r -U -M 5 -A FL31&quot;) to get ack file . In this path(&quot;/var/spool/uucppublic/KTNET/in/FHL&quot;) or the one (&quot;/var/spool/uucppublic/KTNET/in/FWB&quot;),  I can find the ack file .  But under different path, why is their ack file  identical ? 
+2.cd  /icil/edi/mailbox/KTNET/pub/archive/in/fhl , find recent file(like &quot;XFNA_181116210214&quot;). check the file&#039;s content, find have ack of fwb(&quot;ACK/FWB-0140300000313&quot;), Does it occur mistakes ?
+3.manual run ET_in_KTNET_com . And the script will update edi..edi_doc_history. But if application don&#039;t insert relate data to edi..edi_doc_history, update edi_doc_histroy is unsuccessful. </a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 21:36</td>
+    <td>
+      rickwang    </td>
+    <td>记录了工时</td>
+    <td>任务</td>
+    <td>515</td>
+    <td class='text-left'><a href='/pro/task-view-515.html' >study the KTNET processing flow</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 21:29</td>
+    <td>
+      rickwang    </td>
+    <td>创建</td>
+    <td>任务</td>
+    <td>621</td>
+    <td class='text-left'><a href='/pro/task-view-621.html' >FS for FMA/FNA/FSU setup for KTNET</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 20:29</td>
+    <td>
+      clarecao    </td>
+    <td>提交代码</td>
+    <td>任务</td>
+    <td>596</td>
+    <td class='text-left'><a href='/pro/task-view-596.html' >结算中心 ：for   pick up fee ／  Discharge fee  and  surcharge</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 19:50</td>
+    <td>
+      clarecao    </td>
+    <td>提交代码</td>
+    <td>任务</td>
+    <td>596</td>
+    <td class='text-left'><a href='/pro/task-view-596.html' >结算中心 ：for   pick up fee ／  Discharge fee  and  surcharge</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 19:47</td>
+    <td>
+      ianguo    </td>
+    <td>提交代码</td>
+    <td>任务</td>
+    <td>607</td>
+    <td class='text-left'><a href='/pro/task-view-607.html' >WOS Billing - WosTimerService</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 19:47</td>
+    <td>
+      tashapeng    </td>
+    <td>创建</td>
+    <td>日志</td>
+    <td>2288</td>
+    <td class='text-left'><a href='/pro/effort-view-2288.html' >Coding the tree structure of components to display the data .
+Two problems have been found :
+1.the component is currently hardcode data,  how to parse the json data. 
+2. how to implements the function need further study.</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 19:47</td>
+    <td>
+      tashapeng    </td>
+    <td>记录了工时</td>
+    <td>任务</td>
+    <td>587</td>
+    <td class='text-left'><a href='/pro/task-view-587.html' >User Admin UI - keep daily work</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 19:14</td>
+    <td>
+      clarecao    </td>
+    <td>提交代码</td>
+    <td>任务</td>
+    <td>596</td>
+    <td class='text-left'><a href='/pro/task-view-596.html' >结算中心 ：for   pick up fee ／  Discharge fee  and  surcharge</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 18:51</td>
+    <td>
+      ianguo    </td>
+    <td>创建</td>
+    <td>日志</td>
+    <td>2287</td>
+    <td class='text-left'><a href='/pro/effort-view-2287.html' >处理Bug : encounter error and may cause ELSA-CUSTOMER-SERVICE offline when searching by some criteria on Customer App</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 18:48</td>
+    <td>
+      michellezhou    </td>
+    <td>编辑了</td>
+    <td>任务</td>
+    <td>574</td>
+    <td class='text-left'><a href='/pro/task-view-574.html' >hi-fi(high fidelity) prototype design of AFSA3 user admin-Role pages</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 18:48</td>
+    <td>
+      michellezhou    </td>
+    <td>创建</td>
+    <td>日志</td>
+    <td>2286</td>
+    <td class='text-left'><a href='/pro/effort-view-2286.html' >Update Role pages: 
+1) Clone Role Permission page
+ 2) Update Role permission pages 	</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 18:48</td>
+    <td>
+      michellezhou    </td>
+    <td>记录了工时</td>
+    <td>任务</td>
+    <td>574</td>
+    <td class='text-left'><a href='/pro/task-view-574.html' >hi-fi(high fidelity) prototype design of AFSA3 user admin-Role pages</a>
+</td>
+  </tr>
+      <tr class='text-center'>
+    <td>11月16日 18:45</td>
+    <td>
+      ianguo    </td>
+    <td>解决了</td>
+    <td>Bug</td>
+    <td>773</td>
+    <td class='text-left'><a href='/pro/bug-view-773.html' >encounter error and may cause ELSA-CUSTOMER-SERVICE offline when searching by some criteria on Customer App</a>
+</td>
+  </tr>
+    </tbody>
+  <tfoot><tr><td colspan='6'><div style='float:right; clear:none;' class='pager form-inline'>共 <strong>1086</strong> 条记录，<div class='dropdown dropup'><a href='javascript:;' data-toggle='dropdown' id='_recPerPage' data-value='20'>每页 <strong>20</strong> 条<span class='caret'></span></a><ul class='dropdown-menu'><li><a href='javascript:submitPage("changeRecPerPage", 5)'>5</a></li><li><a href='javascript:submitPage("changeRecPerPage", 10)'>10</a></li><li><a href='javascript:submitPage("changeRecPerPage", 15)'>15</a></li><li class='active'><a href='javascript:submitPage("changeRecPerPage", 20)'>20</a></li><li><a href='javascript:submitPage("changeRecPerPage", 25)'>25</a></li><li><a href='javascript:submitPage("changeRecPerPage", 30)'>30</a></li><li><a href='javascript:submitPage("changeRecPerPage", 35)'>35</a></li><li><a href='javascript:submitPage("changeRecPerPage", 40)'>40</a></li><li><a href='javascript:submitPage("changeRecPerPage", 45)'>45</a></li><li><a href='javascript:submitPage("changeRecPerPage", 50)'>50</a></li><li><a href='javascript:submitPage("changeRecPerPage", 100)'>100</a></li><li><a href='javascript:submitPage("changeRecPerPage", 200)'>200</a></li><li><a href='javascript:submitPage("changeRecPerPage", 500)'>500</a></li><li><a href='javascript:submitPage("changeRecPerPage", 1000)'>1000</a></li><li><a href='javascript:submitPage("changeRecPerPage", 2000)'>2000</a></li></ul></div> <strong>1/55</strong> &nbsp; <i class='icon-step-backward' title='首页'></i> <i class='icon-play icon-flip-horizontal' title='上一页'></i> <a href='/pro/company-dynamic-thisweek--date_desc-1086-20-2.html' ><i class='icon-play' title='下一页'></i></a>
+<a href='/pro/company-dynamic-thisweek--date_desc-1086-20-55.html' ><i class='icon-step-forward' title='末页'></i></a>
+<input type='hidden' id='_recTotal'  value='1086' />
+<input type='hidden' id='_pageTotal' value='55' />
+<input type='text'   id='_pageID'    value='1' style='text-align:center;width:30px;' class='form-control' /> 
+<input type='button' id='goto'       value='GO!' onclick='submitPage("changePageID");' class='btn'/>        <script language='Javascript'>
+        vars = 'browseType=thisweek&param=&orderBy=date_desc&recTotal=_recTotal_&recPerPage=_recPerPage_&pageID=_pageID_';
+        pageCookie = 'pagerCompanyDynamic';
+        function submitPage(mode, perPage)
+        {
+            pageTotal  = parseInt(document.getElementById('_pageTotal').value);
+            pageID     = document.getElementById('_pageID').value;
+            recPerPage = document.getElementById('_recPerPage').getAttribute('data-value');
+            recTotal   = document.getElementById('_recTotal').value;
+            if(mode == 'changePageID')
+            {
+                if(pageID > pageTotal) pageID = pageTotal;
+                if(pageID < 1) pageID = 1;
+            }
+            else if(mode == 'changeRecPerPage')
+            {
+                recPerPage = perPage;
+                pageID = 1;
+            }
+            $.cookie(pageCookie, recPerPage, {expires:config.cookieLife, path:config.webRoot});
+
+            vars = vars.replace('_recTotal_', recTotal)
+            vars = vars.replace('_recPerPage_', recPerPage)
+            vars = vars.replace('_pageID_', pageID);
+            location.href=createLink('company', 'dynamic', vars);
+        }
+        </script></div></td></tr></tfoot>
+</table>
+<script>$('#thisweek').addClass('active')</script>
+  </div>  <script>setTreeBox()</script>
+  
+  <div id='divider'></div>
+  <iframe frameborder='0' name='hiddenwin' id='hiddenwin' scrolling='no' class='debugwin hidden'></iframe>
+</div><div id='footer'>
+  <div id='crumbs'>
+    <a href='/pro/my/' >禅道</a>
+&nbsp;<i class="icon-angle-right"></i>&nbsp;<a href='/pro/company/' >组织</a>
+&nbsp;<i class="icon-angle-right"></i>&nbsp;组织动态  </div>
+  <div id='poweredby'>
+  <a href='http://www.zentao.net' target='_blank' class='text-primary'><i class='icon-zentao'></i> 禅道pro6.7.3</a> &nbsp;
+        <a href='/pro/misc-downNotify.html' title='下载桌面提醒'><i class='icon-bell'></i></a>
+ &nbsp;   </div>
+</div>
+<div id="noticeBox"></div>
+<script>
+browserNotice = '你目前使用的浏览器可能无法得到最佳浏览效果，建议使用Chrome、火狐、IE9+、Opera、Safari浏览器。'
+function ajaxIgnoreBrowser(){$.get(createLink('misc', 'ajaxIgnoreBrowser'));}
+$(function(){showBrowserNotice()});
+
+/* Alert get message. */
+$(function()
+{
+    var windowBlur = false;
+    if(window.Notification)
+    {
+        window.onblur  = function(){windowBlur = true;}
+        window.onfocus = function(){windowBlur = false;}
+    }
+    setInterval(function()
+    {
+        $.get(createLink('message', 'ajaxGetMessage', "windowBlur=" + (windowBlur ? '1' : '0')), function(data)
+        {
+           if(!windowBlur)
+            {
+                $('#noticeBox').append(data);
+                adjustNoticePosition();
+            }
+            else
+            {
+                if(data)
+                {
+                    if(typeof data == 'string') data = $.parseJSON(data);
+                    if(typeof data.message == 'string')	notifyMessage(data.message);
+                }
+            }
+        });
+    }, 60 * 1000);
+})
+
+
+</script>
+
+
+<script>config.onlybody = 'no';</script>
+<script language='Javascript'>function changeUser(account)
+{
+    if(account == '')
+    {
+        link = createLink('company', 'dynamic', 'type=all');
+    }
+    else
+    {
+        link = createLink('company', 'dynamic', 'type=account&param=' + account);
+    }
+    location.href = link;
+}
+function changeProject(project)
+{
+    link = createLink('company', 'dynamic', 'type=project&param=' + project);
+    location.href = link;
+}
+function changeProduct(product)
+{
+    link = createLink('company', 'dynamic', 'type=product&param=' + product);
+    location.href = link;
+}
+
+$(function(){
+    if(browseType == 'bysearch') ajaxGetSearchForm();    
+})
+
+</script>
+<script>
+$(function()
+{
+    $('#poweredby a:first').html('<i class="icon-zentao"></i> 禅道专业版 6.7.3');
+})
+</script>
+<script>
+$('#poweredby a:first').attr('title', '到期时间：2019-11-05，授权人数：36');
+</script>
+<style>
+#searchbox .dropdown-menu {margin-top: 0; left: 1px;}
+#searchbox .dropdown-menu > li > a {padding: 5px 8px}
+#searchbox .dropdown-menu > li {display: none}
+#searchbox .dropdown-menu > li.search-type-all {width: 100%; display: block;}
+#searchbox .dropdown-menu > li:hover {position: relative;}
+#searchbox .dropdown-menu > li.active > a:before, #searchbox .dropdown-menu > li:hover > a:before {content: '\e6e1'; font-family: NewZenIcon; font-size: 14px; position: absolute; right: 8px; top: 4px; display: block; color: #808080; font-weight: normal;}
+#searchbox .dropdown-menu > li.search-type-all.active > a:before, #searchbox .dropdown-menu > li.search-type-all:hover > a:before {content: '\e603'; font-family: NewZenIcon;}
+#searchbox .dropdown-menu.show-quick-go.with-active {padding-top: 28px; position: absolute;}
+#searchbox .dropdown-menu.show-quick-go > li {display: block;}
+#searchbox .dropdown-menu.show-quick-go > li.active {position: absolute; top: 0; left: 0; right: 0; width: 100%;}
+#objectSwitcher > a.btn {border-left: none; padding-right:5px;}
+</style>
+<script>
+$(function()
+{
+    var reg = /[^0-9]/;
+    var $typeSelector = $('#typeSelector');
+    var $dropmenu = $typeSelector.children('.dropdown-menu');
+    var $searchQuery = $('#searchQuery');
+    var $searchbox = $('#searchbox');
+    var searchType = $('#searchType').val();
+
+    var toggleMmenu = function(show)
+    {
+        $searchbox.toggleClass('open', show);
+        $dropmenu.toggleClass('show', show).toggleClass('in', show);
+        if(show) $dropmenu.show();
+        else $dropmenu.hide();
+    };
+
+    var hideMenu = function() {
+        toggleMmenu(false);
+    };
+
+    var refreshMenu = function()
+    {
+        var val = $searchQuery.val();
+        if(val !== null && val !== "")
+        {
+            var isQuickGo = !reg.test(val);
+            $dropmenu.toggleClass('show-quick-go', isQuickGo);
+            var $typeAll = $dropmenu.find('li.search-type-all > a');
+            $typeAll.html('搜索 <span>"' + val + '"</span>');
+            if(isQuickGo)
+            {
+                $typeAll.closest('li').removeClass('active');
+                $dropmenu.removeClass('with-active').find('li:not(.search-type-all) > a').each(function()
+                {
+                    var $this = $(this);
+                    var isActiveType = $this.data('value') === searchType && searchType !== 'all';
+                    $this.closest('li').toggleClass('active', isActiveType);
+                    $this.html($this.data('name') + ' <span>#' + (val.length > 4 ? (val.substr(0, 4) + '...') : val) + "</span>");
+                    if(isActiveType) $dropmenu.addClass('with-active');
+                });
+            }
+            else
+            {
+                $dropmenu.find('li.active').removeClass('active');
+                $typeAll.closest('li').addClass('active');
+            }
+            toggleMmenu(true);
+        } else
+        {
+            hideMenu();
+        }
+    };
+
+    if(searchType == 'bug' && 'company' != 'bug' && 'dynamic' != 'bug')
+    {
+        searchType = 'all';
+        $('#searchType').val(searchType);
+        $('#searchTypeName').html("全部");
+    }
+
+    $dropmenu = $dropmenu.appendTo($searchbox);
+    $typeSelector.hide();
+    $dropmenu.on('click', 'a', function(e)
+    {
+        shortcut($(this).data('value'), $searchQuery.val());
+        e.stopPropagation();
+    }).find('li > a').each(function()
+    {
+        var $this = $(this);
+        $this.attr('data-name', $this.text());
+    });
+    var $allItem = $dropmenu.find('li > a[data-value="all"]');
+    if($allItem.length)
+    {
+        $allItem.closest('li').addClass('search-type-all').prependTo($dropmenu);
+    }
+    $('#objectSwitcher > a').html('搜索');
+    $searchQuery.on('change keyup paste input propertychange', refreshMenu).on('focus', function(){
+        setTimeout(refreshMenu, 300);
+    });
+
+    $(document).on('click', hideMenu);
+});
+
+function shortcut(objectType, objectValue)
+{
+    if(objectType === undefined) objectType  = $('#searchType').attr('value');
+    if(objectValue === undefined) objectValue = $('#searchQuery').attr('value');
+    if(objectType && objectValue)
+    {
+        var reg = /[^0-9]/;
+        if(reg.test(objectValue) || objectType == 'all')
+        {
+            location.href=createLink('search', 'index') + (config.requestType == 'PATH_INFO' ? '?words=' + objectValue : '&words=' + objectValue);
+        }
+        else
+        {
+            location.href=createLink(objectType, 'view', "id=" + objectValue);
+        }
+    }    
+}
+</script>
+</body>
+</html>
